@@ -8,7 +8,7 @@ const BookSchema = new mongoose.Schema({
     },
     isbn: {
         type: String,
-        required: ture
+        required: true
     },
     author:{
         type: String,
