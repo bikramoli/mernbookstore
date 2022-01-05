@@ -21,7 +21,16 @@ function ShowBooksDetails(){
         })
     })
     console.log(state.book)
-    
+
+    const onDeleteClick = () => {
+        axios.delete(`http://localhost:8080/api/${id}`)
+        .then(res => {
+            console.log("successfully deleted")
+        })
+         .catch(err => {
+             console.log("error while deleting...")
+         }) 
+    }
     
     return(
         <div className="ShowBookDetails">
@@ -82,23 +91,20 @@ function ShowBooksDetails(){
     </div>
           </div>
 
-          {/* <div className="row">
+          <div className="row">
             <div className="col-md-6">
-              <button type="button" className="btn btn-outline-danger btn-lg btn-block" onClick={this.onDeleteClick.bind(this,book._id)}>Delete Book</button><br />
+              <button type="button" className="btn btn-outline-danger btn-lg btn-block" onClick={onDeleteClick.bind(state.book._id)}>Delete Book</button><br />
             </div>
 
             <div className="col-md-6">
-              <Link to={`/edit-book/${book._id}`} className="btn btn-outline-info btn-lg btn-block">
+              <Link to={`/edit-book/${state.book._id}`} className="btn btn-outline-info btn-lg btn-block">
                     Edit Book
               </Link>
               <br />
             </div>
 
-          </div> */}
-            {/* <br />
-            <button type="button" class="btn btn-outline-info btn-lg btn-block">Edit Book</button>
-            <button type="button" class="btn btn-outline-danger btn-lg btn-block">Delete Book</button> */}
-
+          </div>
+           
         </div>
       </div>
 
