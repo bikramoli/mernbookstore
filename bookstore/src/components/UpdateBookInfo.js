@@ -17,7 +17,14 @@ function UpdateBookInfo(){
     useEffect(()=>{
      axios.get(`http://localhost:8080/api/${id}`)
      .then(res => {
-         console.log(res.data)
+         setstate({
+            title: res.data.title,
+            isbn: res.data.isbn,
+            author: res.data.author,
+            description: res.data.description,
+            published_date: res.data.published_date,
+            publisher: res.data.publisher
+         })
      })
     })
 
