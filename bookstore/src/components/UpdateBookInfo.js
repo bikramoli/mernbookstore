@@ -1,8 +1,27 @@
-import React,{useState} from "react";
-import {Link} from "react-router-dom";
+import React,{useState, useEffect} from "react";
+import {Link, useParams} from "react-router-dom";
+import axios from "axios";
+
 
 function UpdateBookInfo(){
-    const [state, setstate] = useState('')
+    const {id} = useParams();
+    const [state, setstate] = useState({
+      title: '',
+      isbn: '',
+      author: '',
+      description: '',
+      published_date: '',
+      publisher: ''
+    })
+
+    useEffect(()=>{
+     axios.get(`http://localhost:8080/api/${id}`)
+     .then(res => {
+         console.log(res.data)
+     })
+    })
+
+
     const onChange = () =>{
 
     }

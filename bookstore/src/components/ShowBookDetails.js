@@ -23,7 +23,7 @@ function ShowBooksDetails(){
                 })
             })
         })
-        console.log(state.book)
+       
 
         const onDeleteClick = () => {
             axios.delete(`http://localhost:8080/api/${id}`)
