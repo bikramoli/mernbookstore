@@ -26,6 +26,9 @@ function UpdateBookInfo(){
             publisher: res.data.publisher
          })
      })
+     .catch(err => {
+         console.log("Error while geting data to modify..")
+     })
     })
 
 
