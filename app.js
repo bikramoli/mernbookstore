@@ -1,19 +1,15 @@
 const express = require ('express');
 const connectDB = require("./db");
 
-const books = require("./routes/api/books")
+const booksRoutes = require("./routes/api/books")
 const App = express();
 require("dotenv").config();
 
 //db connection
 connectDB();
 
-App.get("/", (req, res)=>{
-    res.send("hello world..!!!")
-})
-
-//routes
-App.use('/api/books', books) 
+//routes middleware
+App.use("/api", booksRoutes) 
 
 const PORT = process.env.PORT || 3000;
 App.listen(PORT, ()=>{
