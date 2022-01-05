@@ -1,8 +1,22 @@
-import React from "react";
+import React,{useState} from "react";
+import { Link } from "react-router-dom";
 
 function CreateBook(){
+   const [state, setstate] = useState({
+    title: '',
+    isbn:'',
+    author:'',
+    description:'',
+    published_date:'',
+    publisher:''
+   })
+    const onChange = (e) => {
+      setstate({
+          [e.target.name]: e.target.value
+      })
+    }
 
-    const handleSubmit = () => {
+    const onSubmit = () => {
 
     }
     return(
