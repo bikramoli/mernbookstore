@@ -37,8 +37,16 @@ function UpdateBookInfo(){
          [name]: e.target.value
      });
     };
-    const onSubmit = () =>{
-
+    const onSubmit = (e) =>{
+      e.preventDefault();
+      const data = {
+        title: state.title,
+        isbn: state.isbn,
+        author: state.author,
+        description: state.description,
+        published_date: state.published_date,
+        publisher: state.publisher
+      }
     }
     return(
         <>
