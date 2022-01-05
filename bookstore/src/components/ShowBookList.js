@@ -1,6 +1,30 @@
-import React from "react";
+import axios from "axios";
+import React, {useState, useEffect} from "react";
+import {Link} from "react-router-dom";
+import BookCard from "./BookCard";
 
 function CreateBook(){
+   const [books, setBooks] = useState([])
+   
+    console.log("PrintBook: " + books);
+    let bookList;
+
+    useEffect(()=>{
+      axios 
+      .get('http://localhost:8080/api/books')
+      .then(res => {
+          console.log(res.data)
+          setBooks(res.data)
+      })
+    },[])
+
+    if(!books) {
+      bookList = "there is no book record!";
+    } else {
+      bookList = books.map((book, k) =>
+        <BookCard book={book} key={k} />
+      );
+    }
     return(
         <>
           <div className="ShowBookList">
