@@ -1,6 +1,8 @@
 import React,{useState} from "react";
 import { Link } from "react-router-dom";
 
+import axios from "axios";
+
 function CreateBook(){
    const [state, setstate] = useState({
     title: '',
@@ -28,9 +30,14 @@ function CreateBook(){
         publisher: state.publisher
       }
 
-      if(!data){
-          console.log("please input data!!")
-      }
+      axios
+        .post("http://localhost/8080/api/books", data)
+        .then(res => {
+            console.log("added successful")
+        })
+        .catch(err =>{
+            console.log("erro while adding")
+        })
     }
     return(
         <>
