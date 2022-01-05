@@ -1,10 +1,11 @@
 import React,{useState, useEffect} from "react";
-import {Link, useParams} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import axios from "axios";
 
 
 function UpdateBookInfo(){
     const {id} = useParams();
+    const navigate = useNavigate();
     const [state, setstate] = useState({
       title: '',
       isbn: '',
@@ -47,6 +48,10 @@ function UpdateBookInfo(){
         published_date: state.published_date,
         publisher: state.publisher
       }
+      axios.put(`http://localhost:8080/api/${id}`, data)
+      .then(res => {
+          navigate(`/show-book/${id}`)
+      })
     }
     return(
         <>
