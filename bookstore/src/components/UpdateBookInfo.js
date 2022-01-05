@@ -19,6 +19,7 @@ function UpdateBookInfo(){
      axios.get(`http://localhost:8080/api/${id}`)
      .then(res => {
          setstate({
+            ...state,
             title: res.data.title,
             isbn: res.data.isbn,
             author: res.data.author,
@@ -30,11 +31,12 @@ function UpdateBookInfo(){
      .catch(err => {
          console.log("Error while geting data to modify..")
      })
-    })
+    },[])
 
     const onChange = (e) =>{
-     const name = e.target.value
+     const name = e.target.name
      setstate({
+         ...state,
          [name]: e.target.value
      });
     };
