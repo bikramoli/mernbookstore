@@ -31,10 +31,12 @@ function UpdateBookInfo(){
      })
     })
 
-
-    const onChange = () =>{
-
-    }
+    const onChange = (e) =>{
+     const name = e.target.value
+     setstate({
+         [name]: e.target.value
+     });
+    };
     const onSubmit = () =>{
 
     }
