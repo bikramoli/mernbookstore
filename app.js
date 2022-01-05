@@ -5,8 +5,16 @@ const booksRoutes = require("./routes/api/books")
 const App = express();
 require("dotenv").config();
 
+var cors = require('cors');
+
 //db connection
 connectDB();
+
+// Init Middleware
+App.use(express.json());
+
+// cors
+App.use(cors());
 
 //routes middleware
 App.use("/api", booksRoutes) 
