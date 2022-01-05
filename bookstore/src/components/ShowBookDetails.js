@@ -2,35 +2,39 @@ import axios from 'axios';
 import React, {useState, useEffect} from 'react';
 import {Link} from "react-router-dom";
 import {useParams} from "react-router-dom";
+// import { useHistory } from "react-router-dom"; in react-router-dom v6 useHistory is replaced with useNavigate
+import {useNavigate} from "react-router-dom";
 
 
 
 function ShowBooksDetails(){
     const { id } = useParams();
- const [state, setstate] = useState({
-     book: {}
- })
-    useEffect(()=>{
-        
-        axios
-        .get(`http://localhost:8080/api/${id}` )
-        .then(res => {
-            setstate({
-                book: res.data
+    const navigate = useNavigate();
+    const [state, setstate] = useState({
+        book: {}
+    })
+        useEffect(()=>{
+            
+            axios
+            .get(`http://localhost:8080/api/${id}` )
+            .then(res => {
+                setstate({
+                    book: res.data
+                })
             })
         })
-    })
-    console.log(state.book)
+        console.log(state.book)
 
-    const onDeleteClick = () => {
-        axios.delete(`http://localhost:8080/api/${id}`)
-        .then(res => {
-            console.log("successfully deleted")
-        })
-         .catch(err => {
-             console.log("error while deleting...")
-         }) 
-    }
+        const onDeleteClick = () => {
+            axios.delete(`http://localhost:8080/api/${id}`)
+            .then(res => {
+                console.log("successfully deleted")
+                 navigate("/")
+            })
+            .catch(err => {
+                console.log("error while deleting...")
+            }) 
+        }
     
     return(
         <div className="ShowBookDetails">
@@ -93,7 +97,7 @@ function ShowBooksDetails(){
 
           <div className="row">
             <div className="col-md-6">
-              <button type="button" className="btn btn-outline-danger btn-lg btn-block" onClick={onDeleteClick.bind(state.book._id)}>Delete Book</button><br />
+              <button type="button" className="btn btn-outline-danger btn-lg btn-block" onClick={onDeleteClick}>Delete Book</button><br />
             </div>
 
             <div className="col-md-6">
