@@ -2,7 +2,8 @@ const express = require ('express');
 const connectDB = require("./db");
 const bodyParser = require("body-parser");
 
-const booksRoutes = require("./routes/api/books")
+const booksRoutes = require("./routes/api/books");
+const userRoutes = require("./routes/api/user");
 const App = express();
 require("dotenv").config();
 
@@ -20,6 +21,7 @@ App.use(cors());
 
 //routes middleware
 App.use("/api", booksRoutes) 
+App.use("/api", userRoutes)
 
 const PORT = process.env.PORT || 3000;
 App.listen(PORT, ()=>{
