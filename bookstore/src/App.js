@@ -6,11 +6,13 @@ import CreateBook from './components/CreateBooks';
 import ShowBookList from './components/ShowBookList';
 import ShowBookDetails from './components/ShowBookDetails';
 import UpdateBookInfo from './components/UpdateBookInfo';
+import Navbar from './components/Navbar';
 
 class App extends Component {
   render() {
     return (
       <Router>
+        <Navbar/>
         <Routes>
           <Route exact path='/' element={<ShowBookList/>} />
           <Route path='/create-book' element={<CreateBook/>} />
