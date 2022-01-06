@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const uuidv1 = require("uuidv1");
 
 
 const userSchema = new mongoose.Schema(
@@ -31,4 +32,13 @@ const userSchema = new mongoose.Schema(
     },
     {timestamps: true}
 
-)
+);
+
+//virtual field
+userSchema.virtual("password")
+.set(function(password){
+    this._password = password
+    this.salt = uuidv1()
+
+})
+.get()
