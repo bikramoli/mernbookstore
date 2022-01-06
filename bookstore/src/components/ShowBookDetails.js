@@ -22,7 +22,7 @@ function ShowBooksDetails(){
                     book: res.data
                 })
             })
-        })
+        },[])
        
 
         const onDeleteClick = () => {

@@ -1,6 +1,8 @@
 const express = require ('express');
 const connectDB = require("./db");
 const bodyParser = require("body-parser");
+const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 
 const booksRoutes = require("./routes/api/books");
 const userRoutes = require("./routes/api/user");
@@ -15,6 +17,8 @@ connectDB();
 // Init Middleware
 App.use(express.json());
 App.use(bodyParser.json());
+App.use(morgan('dev'));
+App.use(cookieParser());
 
 // cors
 App.use(cors());
