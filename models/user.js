@@ -52,7 +52,7 @@ userSchema.method = {
            return ""
        }
        try{
-          return crypto.createHmac('sha1', this.salt)
+          return crypto.createHmac('sha1', this.salt)//crypto is core node module used for hash
                           .update(password)
                           .digest('hex')
 
@@ -61,3 +61,6 @@ userSchema.method = {
        }
     }
 }
+module.exports = mongoose.model("User", userSchema);
+//mongoose.model method is used to create new model
+//("User", userSchema) where User is model based on userSchema
