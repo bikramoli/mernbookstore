@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 function SignUp(){
-    const navigate = useNavigate();
+   const navigate = useNavigate();
    const [state, setstate] = useState({
        name:"",
        email:"",
@@ -14,7 +14,7 @@ function SignUp(){
        show: false
    })
    
-   const {name, email, password,isSuccess,errorMessage,show} = state
+   const { name, email, password, isSuccess, errorMessage, show } = state
    const handleChange = (e) =>{
         const name = e.target.name
         setstate({
@@ -22,6 +22,8 @@ function SignUp(){
             [name]:e.target.value
         })
    }
+
+   
    const handleClick = (e) => {
        e.preventDefault()
        const data = {
@@ -34,6 +36,7 @@ function SignUp(){
        .then(res => {
             console.log(res.status)
             console.log(res.data)
+            
            setstate({
                ...state,
                name: "",
@@ -44,23 +47,33 @@ function SignUp(){
                show: true,
            })
            setTimeout(function(){
-                setstate({ show: false})
-                // navigate("/signin")
+                setstate({...state, show: false})
+                navigate("/signin")
            },3000)
        })
+     
+       
        .catch(error => {
-        console.log(error);
-      })         
+        console.log(error.response.data.error);
+        const err = error.response.data.error
+        setstate({
+          ...state,
+          errorMessage:err,
+          isSuccess: true,
+          show: true
+        })
+      })
+              
    }
     const ErrorPage = ()=>{
       return(
-        <button className={isSuccess ? "btn btn-primary btn-lg btn-block":""}> {errorMessage}</button>
+        <button className={isSuccess ? "btn btn-primary btn-lg btn-block":"btn btn-danger btn-lg btn-block"}> {errorMessage}</button>
       )
     }
     return(
         
         <section className="vh-100">
-         {show?<ErrorPage/>:""}
+         
         <div className="container py-5 h-100">
           <div className="row d-flex align-items-center justify-content-center h-100">
             <div className="col-md-8 col-lg-7 col-xl-6">
@@ -68,7 +81,7 @@ function SignUp(){
             </div>
             <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
               <form>
-
+               {show?<ErrorPage/>:""}
                <div className="form-outline mb-4">
                   <input type="text" 
                   name="name"
