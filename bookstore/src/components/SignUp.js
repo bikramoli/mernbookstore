@@ -9,10 +9,12 @@ function SignUp(){
        name:"",
        email:"",
        password:"",
-       errorMessage:""
+       errorMessage:"",
+       isSuccess: false,
+       show: false
    })
    
-   const {name, email, password} = state
+   const {name, email, password,isSuccess,errorMessage,show} = state
    const handleChange = (e) =>{
         const name = e.target.name
         setstate({
@@ -30,29 +32,35 @@ function SignUp(){
        
        axios.post("http://localhost:8080/api/signup", data)
        .then(res => {
-            console.log(res)
+            console.log(res.status)
+            console.log(res.data)
            setstate({
+               ...state,
                name: "",
                email:"",
                password: "",
-               errorMessage:"User sign up successfully"
+               errorMessage: "User sign up successfully",
+               isSuccess: true,
+               show: true,
            })
            setTimeout(function(){
-                navigate("/signin")
+                setstate({ show: false})
+                // navigate("/signin")
            },3000)
-           
-           
        })
        .catch(error => {
         console.log(error);
-      })
-
-             
+      })         
    }
-
+    const ErrorPage = ()=>{
+      return(
+        <button className={isSuccess ? "btn btn-primary btn-lg btn-block":""}> {errorMessage}</button>
+      )
+    }
     return(
         
         <section className="vh-100">
+         {show?<ErrorPage/>:""}
         <div className="container py-5 h-100">
           <div className="row d-flex align-items-center justify-content-center h-100">
             <div className="col-md-8 col-lg-7 col-xl-6">
