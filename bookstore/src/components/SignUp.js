@@ -2,12 +2,14 @@ import React, {useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
+
 function SignUp(){
     const navigate = useNavigate();
    const [state, setstate] = useState({
        name:"",
        email:"",
-       password:""
+       password:"",
+       errorMessage:""
    })
    
    const {name, email, password} = state
@@ -18,25 +20,31 @@ function SignUp(){
             [name]:e.target.value
         })
    }
-   const handleClick = () => {
+   const handleClick = (e) => {
+       e.preventDefault()
        const data = {
            name: name,
            email: email,
            password: password
        }
-       console.log(data)
+       
        axios.post("http://localhost:8080/api/signup", data)
        .then(res => {
-           res.json("hello")
+            console.log(res)
            setstate({
                name: "",
                email:"",
-               password: ""
+               password: "",
+               errorMessage:"User sign up successfully"
            })
-           navigate("/signin")
+           setTimeout(function(){
+                navigate("/signin")
+           },3000)
+           
+           
        })
-       .catch(err => {
-        console.log("Error in signup!");
+       .catch(error => {
+        console.log(error);
       })
 
              
@@ -106,7 +114,7 @@ function SignUp(){
                   <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                 </div>
       
-                <p>Don't have an account? <a href="#!" className="link-info">Register here</a></p>
+                <p>Don't have an account? <a href="/signin" className="link-info">Login here</a></p>
       
               </form>
             </div>
