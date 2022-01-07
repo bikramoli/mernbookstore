@@ -1,16 +1,20 @@
 import React, {useState} from "react";
 import axios from "axios";
+import {useNavigate} from "react-router-dom";
 
 function SignUp(){
+    const navigate = useNavigate();
    const [state, setstate] = useState({
        name:"",
        email:"",
        password:""
    })
+   
    const {name, email, password} = state
    const handleChange = (e) =>{
         const name = e.target.name
         setstate({
+            ...state,
             [name]:e.target.value
         })
    }
@@ -20,8 +24,21 @@ function SignUp(){
            email: email,
            password: password
        }
-
+       console.log(data)
        axios.post("http://localhost:8080/api/signup", data)
+       .then(res => {
+           res.json("hello")
+           setstate({
+               name: "",
+               email:"",
+               password: ""
+           })
+           navigate("/signin")
+       })
+       .catch(err => {
+        console.log("Error in signup!");
+      })
+
              
    }
 
@@ -75,9 +92,9 @@ function SignUp(){
                       type="checkbox"
                       value=""
                       id="form1Example3"
-                      checked
+                      
                     />
-                    <label className="form-check-label" for="form1Example3"> Remember me </label>
+                    <label className="form-check-label"> Remember me </label>
                   </div>
                   <a href="#!">Forgot password?</a>
                 </div>
@@ -89,7 +106,7 @@ function SignUp(){
                   <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                 </div>
       
-                <p>Don't have an account? <a href="#!" class="link-info">Register here</a></p>
+                <p>Don't have an account? <a href="#!" className="link-info">Register here</a></p>
       
               </form>
             </div>

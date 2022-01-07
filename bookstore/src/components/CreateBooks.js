@@ -1,9 +1,10 @@
 import React,{useState} from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
 function CreateBook(){
+   const navigate = useNavigate();
    const [state, setstate] = useState({
     title: '',
     isbn:'',
@@ -44,7 +45,7 @@ function CreateBook(){
                 published_date:'',
                 publisher:''
               })
-              this.props.history.push('/');
+              navigate('/');
         })
         .catch(err => {
             console.log("Error in CreateBook!");
