@@ -26,7 +26,11 @@ exports.signin = (req, res) => {
             } 
             //if user found then check email and password match
             //create authenticate method in user model
-
+            if(!user.authenticate(password)){
+               return res.status(401).json({
+                   error: "User password dosent match"
+               })
+            }
             //generate signed token with the help of user id & secre
              const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET)
              //persist token as "t" with expire date
