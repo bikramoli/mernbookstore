@@ -15,6 +15,12 @@ exports.signup = (req, res) => {
      });
   });
 };
+
 exports.signin = (req, res) => {
-    
+    const {email, password} = req.body
+    User.findOne({email}, (err, user)=>{
+            if(!user || err){
+                res.statue(400).json({err: "User doesnot exist"})
+            }
+    })
 }
