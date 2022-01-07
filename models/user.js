@@ -54,7 +54,7 @@ userSchema.methods = {
            return ""
        }
        try{
-          return crypto.createHmac('sha1', this.salt)//crypto is core node module used for hash
+          return crypto.createHmac('sha1', this.salt)//crypto is core node module used for hashing
                           .update(password)
                           .digest('hex')
 

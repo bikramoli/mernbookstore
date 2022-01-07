@@ -3,6 +3,7 @@ const connectDB = require("./db");
 const bodyParser = require("body-parser");
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const expressValidator = require('express-validator');
 
 const booksRoutes = require("./routes/api/books");
 const userRoutes = require("./routes/api/user");
@@ -19,6 +20,7 @@ App.use(express.json());
 App.use(bodyParser.json());
 App.use(morgan('dev'));
 App.use(cookieParser());
+App.use(expressValidator());
 
 // cors
 App.use(cors());
