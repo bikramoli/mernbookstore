@@ -1,8 +1,30 @@
-import React from "react";
+import React, {useState} from "react";
+import axios from "axios";
 
 function SignUp(){
+   const [state, setstate] = useState({
+       name:"",
+       email:"",
+       password:""
+   })
+   const {name, email, password} = state
+   const handleChange = (e) =>{
+        const name = e.target.name
+        setstate({
+            [name]:e.target.value
+        })
+   }
+   const handleClick = () => {
+       const data = {
+           name: name,
+           email: email,
+           password: password
+       }
 
-    
+       axios.post("http://localhost:8080/api/signup", data)
+             
+   }
+
     return(
         
         <section className="vh-100">
@@ -15,16 +37,34 @@ function SignUp(){
               <form>
 
                <div className="form-outline mb-4">
-                  <input type="name" id="form1Example13" placeholder="Name" className="form-control form-control-lg" />
+                  <input type="text" 
+                  name="name"
+                  id="form1Example13" 
+                  placeholder="Name" 
+                  className="form-control form-control-lg"
+                  onChange={handleChange} 
+                  value={name}/>
                 </div>
 
                 <div className="form-outline mb-4">
-                  <input type="email" id="form1Example13" placeholder="Email" className="form-control form-control-lg" />
+                  <input type="text"
+                  name="email" 
+                  id="form1Example12" 
+                  placeholder="Email" 
+                  className="form-control form-control-lg" 
+                  onChange={handleChange}
+                  value={email}/>
                 </div>
       
                
                 <div className="form-outline mb-4">
-                  <input type="password" id="form1Example23" placeholder="Password" className="form-control form-control-lg" />
+                  <input type="text"
+                  name="password" 
+                  id="form1Example23" 
+                  placeholder="Password" 
+                  className="form-control form-control-lg" 
+                  onChange={handleChange}
+                  value={password}/>
                 </div>
       
                 <div className="d-flex justify-content-around align-items-center mb-4">
@@ -43,17 +83,13 @@ function SignUp(){
                 </div>
       
              
-                <button type="submit" className="btn btn-primary btn-lg btn-block">Sign in</button>
+                <button type="submit" className="btn btn-primary btn-lg btn-block" onClick={handleClick}>Sign up</button>
       
                 <div className="divider d-flex align-items-center my-4">
                   <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                 </div>
       
-                <a className="btn btn-primary btn-lg btn-block" style={{backgroundColor: '#3b5998'}} href="#!" role="button">
-                  <i className="fab fa-facebook-f me-2"></i>Continue with Facebook
-                </a>
-                <a className="btn btn-primary btn-lg btn-block" style={{backgroundColor: '#55acee'}} href="#!" role="button">
-                  <i className="fab fa-twitter me-2"></i>Continue with Twitter</a>
+                <p>Don't have an account? <a href="#!" class="link-info">Register here</a></p>
       
               </form>
             </div>
