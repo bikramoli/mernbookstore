@@ -48,7 +48,15 @@ userSchema.virtual('password')
     return this._password
   })
 
+
 userSchema.methods = {
+    authenticate: function(plainText){
+        if(this.hashPassword(plainText)===this.hashed_password){
+            return
+        }
+        
+    },
+
     hashPassword: function(password){
        if(!password){
            return ""

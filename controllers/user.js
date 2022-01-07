@@ -22,10 +22,10 @@ exports.signin = (req, res) => {
     const {email, password} = req.body
     User.findOne({email}, (err, user)=>{
             if(!user || err){
-                res.statue(400).json({err: "User doesnot exist"})
+                return res.statue(400).json({err: "User doesnot exist"})
             } 
             //if user found then check email and password match
-            
+            //create authenticate method in user model
 
             //generate signed token with the help of user id & secre
              const token = jwt.sign({_id: user._id}, process.env.JWT_SECRET)
