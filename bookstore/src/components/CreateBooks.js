@@ -32,12 +32,12 @@ function CreateBook(){
         published_date: state.published_date,
         publisher: state.publisher
       };
-      console.log(data)
       axios
         .post("http://localhost:8080/api/", data)
         .then(res => {
             res.json(data)
             setstate({
+                ...state,
                 title: '',
                 isbn:'',
                 author:'',
@@ -45,11 +45,15 @@ function CreateBook(){
                 published_date:'',
                 publisher:''
               })
-              navigate('/');
+              setTimeout(function(){ 
+                navigate("/signin")
+           },2000)
+              
         })
-        .catch(err => {
-            console.log("Error in CreateBook!");
-          })
+        .catch(error => {
+            console.log(error.response.data.error);
+        })
+          
     }
     return(
         <>       

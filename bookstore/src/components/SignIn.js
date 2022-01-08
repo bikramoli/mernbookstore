@@ -1,17 +1,20 @@
 import React, {useState} from "react";
 import axios from "axios";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 
 function SignIn(){
-    const navigate = useNavigate();
+   const navigate = useNavigate();
    const [state, setstate] = useState({
-    
        email:"",
-       password:""
+       password:"",
+       errorMessage:"",
+       isSuccess: false,
+       show: false,
+       user: localStorage.getItem("user")
    })
    
-   const { email, password} = state
+   const { email, password, isSuccess, errorMessage, show, user } = state
    const handleChange = (e) =>{
         const name = e.target.name
         setstate({
@@ -19,32 +22,65 @@ function SignIn(){
             [name]:e.target.value
         })
    }
+
+   
    const handleClick = (e) => {
-     e.preventDefault()
+       e.preventDefault()
        const data = {
+           
            email: email,
            password: password
        }
-       console.log(data)
+       
        axios.post("http://localhost:8080/api/signin", data)
-       .then(response => {
-           response.json()
+       .then(res => {
+            console.log(res.data)
+            console.log(res.data.user)
+            console.log(`user${user}`)
            setstate({
+               ...state,
                email:"",
-               password: ""
+               password: "",
+               user: localStorage.setItem("user", JSON.stringify(res.data.user)),
+               errorMessage: "User sign up successfully",
+               isSuccess: true,
+               show: true,
            })
-           navigate("/signup")
+           setTimeout(function(){
+                setstate({...state, show: false})
+                if(user){
+                  navigate("/")
+                 }
+           },3000)
        })
+       
+     
+       
        .catch(error => {
-        console.log(error);
+        console.log(error.response.data.error);
+        const err = error.response.data.error
+        setstate({
+          ...state,
+          errorMessage:err,
+          isSuccess: false,
+          show: true
+        })
+        setTimeout(function(){
+          setstate({...state, show: false})
+          
+        },3000)
       })
-
-             
+              
    }
-
+    const ErrorPage = ()=>{
+      return(
+        <button className={isSuccess ? "btn btn-primary btn-lg btn-block":"btn btn-danger btn-lg btn-block"}> {errorMessage}</button>
+      )
+    }
     return(
         
         <section className="vh-100">
+         
         <div className="container py-5 h-100">
           <div className="row d-flex align-items-center justify-content-center h-100">
             <div className="col-md-8 col-lg-7 col-xl-6">
@@ -52,9 +88,7 @@ function SignIn(){
             </div>
             <div className="col-md-7 col-lg-5 col-xl-5 offset-xl-1">
               <form>
-
-             
-
+               {show?<ErrorPage/>:""}
                 <div className="form-outline mb-4">
                   <input type="text"
                   name="email" 
@@ -98,7 +132,7 @@ function SignIn(){
                   <p className="text-center fw-bold mx-3 mb-0 text-muted">OR</p>
                 </div>
       
-                <p>Don't have an account? <a href="/signup" className="link-info">Register here</a></p>
+                <p>Don't have an account? <a href="/signup" className="link-info">Sign Up here</a></p>
       
               </form>
             </div>

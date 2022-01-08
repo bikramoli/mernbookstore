@@ -59,9 +59,13 @@ function SignUp(){
         setstate({
           ...state,
           errorMessage:err,
-          isSuccess: true,
+          isSuccess: false,
           show: true
         })
+        setTimeout(function(){
+          setstate({...state, show: false})
+          
+        },3000)
       })
               
    }
